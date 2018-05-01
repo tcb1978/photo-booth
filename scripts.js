@@ -3,6 +3,7 @@ const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
 const strip = document.querySelector('.strip');
 const snap = document.querySelector('.snap');
+const takePicture = document.querySelector('#takePicture');
 
 function getVideo() {
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -25,6 +26,10 @@ function paintToCanvas() {
     // take image from webcam and add to canvas
     return setInterval(() => {
         ctx.drawImage(video, 0, 0, width, height);
+        // take pixels our
+        let pixels = ctx.getImageData(0, 0, width, height);
+        // add pixels back
+        ctx.putImageData(pixels, 0, 0);
     }, 16);
 }
 
@@ -46,3 +51,4 @@ function takePhoto() {
 getVideo();
 
 video.addEventListener('canplay', paintToCanvas);
+takePicture.addEventListener('click', takePhoto);
