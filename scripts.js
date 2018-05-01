@@ -33,10 +33,16 @@ function takePhoto() {
     snap.currentTime = 0;
     snap.play();
     // take data from canvas
-    const data = canvas.toDatalURL('image/jpeg');
-    console.log(data);
+    const data = canvas.toDataURL('image/jpeg');
+    // create a link for image
+    const link = document.createElement('a');
+    link.href = data;
+    link.setAttribute('download', 'webcam_photo_booth');
+    link.innerHTML = `<img src="${data}" alt="webcam photo booth" />`
+    // insert into strip element
+    strip.insertBefore(link, strip.firstChild);
 }
 
-// getVideo();
+getVideo();
 
 video.addEventListener('canplay', paintToCanvas);
